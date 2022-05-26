@@ -177,6 +177,7 @@ RUN /tmp/agnos/compile-modemmanager.sh
 
 # Run ModemManager in debug mode to allow AT commands
 COPY ./userspace/files/ModemManager.service /lib/systemd/system/
+RUN systemctl enable ModemManager
 
 # Add more T-Mobile networks to mobile-broadband-provider-info (do we still need the package?)
 COPY ./userspace/files/serviceproviders.xml /usr/share/mobile-broadband-provider-info/serviceproviders.xml
