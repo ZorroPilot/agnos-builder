@@ -172,8 +172,8 @@ COPY ./userspace/files/disable_bootkick.py /lib/systemd/system-shutdown/
 RUN rm -rf /usr/lib/aarch64-linux-gnu/qt5/plugins/bearer
 
 # Build ModemManager
-COPY ./userspace/build_modemmanager.sh /tmp/agnos/
-RUN /tmp/agnos/build_modemmanager.sh
+COPY ./userspace/compile-modemmanager.sh /tmp/agnos/
+RUN /tmp/agnos/compile-modemmanager.sh
 
 # Run ModemManager in debug mode to allow AT commands
 COPY ./userspace/files/ModemManager.service /lib/systemd/system/

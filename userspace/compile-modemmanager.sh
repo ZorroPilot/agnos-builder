@@ -8,7 +8,16 @@ apt-get install -y python3 python3-pip python3-setuptools python3-wheel ninja-bu
 pip3 install --user meson
 export PATH=$PATH:/root/.local/bin
 
+# mobile-broadband-provider-info
+apt install -y xsltproc
+git clone https://gitlab.gnome.org/GNOME/mobile-broadband-provider-info.git
+cd mobile-broadband-provider-info
+./autogen.sh
+./configure
+make install
+
 # build libqmi
+cd /tmp
 apt install -y libgudev-1.0-dev gobject-introspection libgirepository1.0-dev help2man bash-completion
 
 git clone https://gitlab.freedesktop.org/mobile-broadband/libqmi.git
@@ -18,7 +27,7 @@ ninja -C build
 ninja -C build install
 
 # build ModemManager
-cd /tmp/
+cd /tmp
 apt install -y libpolkit-gobject-1-dev
 
 git clone https://gitlab.freedesktop.org/mobile-broadband/ModemManager.git
