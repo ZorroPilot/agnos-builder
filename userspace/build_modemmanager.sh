@@ -13,13 +13,15 @@ apt install -y libgudev-1.0-dev gobject-introspection libgirepository1.0-dev hel
 
 git clone https://gitlab.freedesktop.org/mobile-broadband/libqmi.git
 cd libqmi
-meson setup build --prefix=/usr -Dmbim_qmux=false -Dqrtr=false
+meson setup build --prefix=/usr --libdir=/usr/lib/aarch64-linux-gnu -Dmbim_qmux=false -Dqrtr=false
 ninja -C build
+ninja -C build install
 
 # build ModemManager
+cd /tmp/
 apt install -y libpolkit-gobject-1-dev
 
 git clone https://gitlab.freedesktop.org/mobile-broadband/ModemManager.git
 cd ModemManager
-meson setup build --prefix=/usr --sysconfdir=/etc -Dqmi=true -Dmbim=false
+meson setup build --prefix=/usr --libdir=/usr/lib/aarch64-linux-gnu --sysconfdir=/etc --buildtype=release -Dqmi=true -Dmbim=false -Dqrtr=false
 ninja -C build
