@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+LIBQMI_VERSION="1.30.6"
+MM_VERSION="1.18.8"
+
 cd /tmp/
 
 # TODO: clean up this python stuff
@@ -28,9 +31,13 @@ ninja -C build install
 
 # build ModemManager
 cd /tmp
-apt install -y libpolkit-gobject-1-dev
+apt install -y gettext libpolkit-gobject-1-dev
 
-git clone https://gitlab.freedesktop.org/mobile-broadband/ModemManager.git
+git clone -b $MM_VERSION https://gitlab.freedesktop.org/mobile-broadband/ModemManager.git
+
 cd ModemManager
-meson setup build --prefix=/usr --libdir=/usr/lib/aarch64-linux-gnu --sysconfdir=/etc --buildtype=release -Dqmi=true -Dmbim=false -Dqrtr=false
+meson setup build --prefix=/usr --libdir=/usr/lib/aarch64-linux-gnu --sysconfdir=/etc --buildtype=release \
+      -Dqmi=true -Dmbim=false -Dqrtr=false -Dplugin_foxconn=disabled -Dplugin_dell=disabled \
+      -Dplugin_altair_lte=disabled -Dplugin_fibocom=disabled
+
 ninja -C build
